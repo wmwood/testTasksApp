@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "html {\r\n  overflow: hidden;\r\n}\r\n\r\n.is-1 .column {\r\n    padding: 0.25rem;\r\n}\r\n\r\n/***** SYSTEM STYLES *****/\r\n\r\n[hidden] {\r\n    display: none !important;\r\n}\r\n"
+module.exports = "* {\r\n  cursor: none !important;\r\n}\r\n\r\nhtml {\r\n  overflow: hidden;\r\n}\r\n\r\n.is-1 .column {\r\n    padding: 0.25rem;\r\n}\r\n\r\n/***** SYSTEM STYLES *****/\r\n\r\n[hidden] {\r\n    display: none !important;\r\n}\r\n"
 
 /***/ }),
 
