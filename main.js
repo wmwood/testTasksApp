@@ -240,7 +240,7 @@ var NumberpadComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"hero is-primary is-fullheight\">\r\n  <div class=\"hero-body\" style=\"padding: 1.5rem\">\r\n    <canvas width=\"1280\" height=\"720\" style=\"border: 1px solid red; width:100%; margin:0;\"></canvas>\r\n  </div>\r\n</section>\r\n"
+module.exports = "<section class=\"hero is-primary is-fullheight\">\r\n  <video #video id=\"video\" width=\"1800\" height=\"1200\" autoplay></video>\r\n  <div class=\"hero-body\" style=\"padding: 1.5rem\">\r\n    <canvas #canvas width=\"1280\" height=\"720\" style=\"border: 1px solid red; width:100%; margin:0;\"></canvas>\r\n    <button class=\"button is-block\" id=\"snap\" (click)=\"capture()\">Snap Photo</button>\r\n  </div>\r\n</section>\r\n"
 
 /***/ }),
 
@@ -267,9 +267,32 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var ShootComponent = /** @class */ (function () {
     function ShootComponent() {
+        this.captures = [];
     }
-    ShootComponent.prototype.ngOnInit = function () {
+    ShootComponent.prototype.ngOnInit = function () { };
+    ShootComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+                _this.video.nativeElement.src = window.URL.createObjectURL(stream);
+                _this.video.nativeElement.play();
+            });
+        }
     };
+    ShootComponent.prototype.capture = function () {
+        this.canvas.nativeElement
+            .getContext('2d')
+            .drawImage(this.video.nativeElement, 0, 0, 1800, 1200);
+        this.captures.push(this.canvas.nativeElement.toDataURL('image/png'));
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('video'),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
+    ], ShootComponent.prototype, "video", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('canvas'),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
+    ], ShootComponent.prototype, "canvas", void 0);
     ShootComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-shoot',
