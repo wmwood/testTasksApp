@@ -199,10 +199,9 @@ var NumberpadComponent = /** @class */ (function () {
         this.phoneNumberChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.isBackspaceHidden = true;
     }
-    NumberpadComponent.prototype.ngOnInit = function () {
-    };
+    NumberpadComponent.prototype.ngOnInit = function () { };
     NumberpadComponent.prototype.press = function (key) {
-        if (key != null && key != undefined) {
+        if (key != null && key !== undefined) {
             this.phoneNumber += key;
         }
         else {
@@ -240,7 +239,7 @@ var NumberpadComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"hero is-primary is-fullheight\">\r\n  <video #video id=\"video\" width=\"1800\" height=\"1200\" autoplay></video>\r\n  <div class=\"hero-body\" style=\"padding: 1.5rem\">\r\n    <canvas #canvas width=\"1280\" height=\"720\" style=\"border: 1px solid red; width:100%; margin:0;\"></canvas>\r\n    <button class=\"button is-block\" id=\"snap\" (click)=\"capture()\">Snap Photo</button>\r\n  </div>\r\n</section>\r\n"
+module.exports = "<section class=\"hero is-primary is-fullheight\">\r\n  <video #video id=\"video\" width=\"1800\" height=\"1200\" autoplay></video>\r\n  <div class=\"hero-body\" style=\"padding: 1.5rem\">\r\n    <canvas #canvas width=\"1280\" height=\"720\" style=\"border: 1px solid red; width:100%; margin:0;\"></canvas>\r\n    <button class=\"button\" style=\"position: fixed; top: 45%; left: 50%; transform: translate(-50%);\" id=\"snap\" (click)=\"capture()\">Snap Photo</button>\r\n  </div>\r\n  <div class=\"hero-foot\">\r\n    <ul>\r\n      <li *ngFor=\"let c of captures\">\r\n        <img src=\"{{ c }}\" height=\"50\" />\r\n      </li>\r\n    </ul>\r\n  </div>\r\n</section>\r\n"
 
 /***/ }),
 
