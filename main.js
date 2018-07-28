@@ -298,13 +298,13 @@ var ShootComponent = /** @class */ (function () {
         this.canvasIsVisible = true;
         setTimeout(function () {
             this.canvasIsVisible = false;
+            if (this.captures.length < 4) {
+                this.countDown();
+            }
+            else {
+                alert('processing!');
+            }
         }, 1500);
-        if (this.captures.length < 4) {
-            this.countDown();
-        }
-        else {
-            alert('processing!');
-        }
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('video'),
