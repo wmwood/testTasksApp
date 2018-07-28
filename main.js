@@ -239,7 +239,7 @@ var NumberpadComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"hero is-primary is-fullheight\">\r\n  <video #video id=\"video\" width=\"1800\" height=\"1200\" autoplay></video>\r\n  <div class=\"hero-body\" style=\"padding: 1.5rem\">\r\n    <canvas #canvas width=\"1280\" height=\"720\" style=\"border: 1px solid red; width:100%; margin:0;\"></canvas>\r\n    <button class=\"button\" style=\"position: fixed; top: 45%; left: 50%; transform: translate(-50%);\" id=\"snap\" (click)=\"capture()\">Snap Photo</button>\r\n  </div>\r\n  <div class=\"hero-foot\">\r\n    <ul>\r\n      <li *ngFor=\"let c of captures\">\r\n        <img src=\"{{ c }}\" height=\"50\" />\r\n      </li>\r\n    </ul>\r\n  </div>\r\n</section>\r\n"
+module.exports = "<section class=\"hero is-primary is-fullheight\">\r\n  <div class=\"hero-body\" style=\"padding: 1.5rem\">\r\n    <video #video id=\"video\" autoplay style=\"border: 1px solid red; width:100%; margin:0;\" [hidden]=\"canvasIsVisible\"></video>\r\n    <canvas #canvas width=\"1280\" height=\"720\" style=\"border: 1px solid red; width:100%; margin:0;\" [hidden]=\"!canvasIsVisible\"></canvas>\r\n  </div>\r\n</section>\r\n"
 
 /***/ }),
 
@@ -266,9 +266,20 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var ShootComponent = /** @class */ (function () {
     function ShootComponent() {
+        this.canvasIsVisible = false;
+        this.onScreenText = '';
         this.captures = [];
     }
-    ShootComponent.prototype.ngOnInit = function () { };
+    ShootComponent.prototype.ngOnInit = function () {
+        this.countDown();
+    };
+    ShootComponent.prototype.countDown = function () {
+        var _this = this;
+        this.onScreenText = '3';
+        setTimeout(function () { return (_this.onScreenText = '2'); }, 1000);
+        setTimeout(function () { return (_this.onScreenText = '1'); }, 2000);
+        setTimeout(function () { return _this.capture(); }, 3000);
+    };
     ShootComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -279,10 +290,21 @@ var ShootComponent = /** @class */ (function () {
         }
     };
     ShootComponent.prototype.capture = function () {
+        this.onScreenText = '';
         this.canvas.nativeElement
             .getContext('2d')
-            .drawImage(this.video.nativeElement, 0, 0, 1800, 1200);
+            .drawImage(this.video.nativeElement, 0, 0, 1280, 720);
         this.captures.push(this.canvas.nativeElement.toDataURL('image/png'));
+        this.canvasIsVisible = true;
+        setTimeout(function () {
+            this.canvasIsVisible = false;
+        }, 1500);
+        if (this.captures.length < 4) {
+            this.countDown();
+        }
+        else {
+            alert('processing!');
+        }
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('video'),
